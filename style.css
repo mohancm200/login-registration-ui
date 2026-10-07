@@ -1,6 +1,6 @@
 /* =====================================================
-   TASK 2 - LOGIN & REGISTRATION UI
-   RESPONSIVE BOOTSTRAP PROJECT
+   TASK 2 - STEP 2
+   RESPONSIVE NAVIGATION & LAYOUT
 ===================================================== */
 
 
@@ -39,13 +39,26 @@ body {
     letter-spacing: 0.5px;
 }
 
+.navbar-brand i {
+    color: #6ea8fe;
+}
+
 .nav-link {
     margin-left: 10px;
     transition: 0.3s ease;
 }
 
 .nav-link:hover {
+    color: #ffffff !important;
     transform: translateY(-2px);
+}
+
+.navbar-toggler {
+    border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.navbar-toggler:focus {
+    box-shadow: none;
 }
 
 
@@ -340,10 +353,23 @@ body {
 
 
 /* =====================================================
-   RESPONSIVE DESIGN
+   TABLET
 ===================================================== */
 
 @media (max-width: 991px) {
+
+    .custom-navbar {
+        padding: 14px 0;
+    }
+
+    .navbar-nav {
+        padding-top: 15px;
+    }
+
+    .nav-link {
+        margin-left: 0;
+        padding: 10px 0;
+    }
 
     .hero-section {
         padding: 60px 0;
@@ -357,8 +383,13 @@ body {
         max-width: 550px;
         margin: 0 auto;
     }
+
 }
 
+
+/* =====================================================
+   MOBILE
+===================================================== */
 
 @media (max-width: 576px) {
 
@@ -399,4 +430,5 @@ body {
     .auth-modal .modal-body {
         padding: 30px 20px;
     }
+
 }

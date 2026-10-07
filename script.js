@@ -1,18 +1,18 @@
 // =====================================================
-// TASK 2 - LOGIN & REGISTRATION UI
-// RESPONSIVE PROJECT
+// TASK 2 - STEP 2
+// RESPONSIVE NAVIGATION
 // =====================================================
 
 
-// Confirm that JavaScript is connected
+// Confirm JavaScript is connected
 
 console.log(
-    "Task 2 Login & Registration UI loaded successfully."
+    "Task 2 Step 2 loaded successfully."
 );
 
 
 // =====================================================
-// NAVBAR CLOSE ON MOBILE
+// CLOSE MOBILE NAVBAR AFTER CLICKING A LINK
 // =====================================================
 
 const navbarLinks = document.querySelectorAll(
@@ -49,10 +49,12 @@ navbarLinks.forEach(function (link) {
 
 
 // =====================================================
-// AUTH MODAL
+// AUTH MODAL EVENT
 // =====================================================
 
-const authModal = document.getElementById("authModal");
+const authModal = document.getElementById(
+    "authModal"
+);
 
 if (authModal) {
 
