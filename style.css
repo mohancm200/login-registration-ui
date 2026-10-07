@@ -1,0 +1,21 @@
+/* =====================================================
+   TASK 2 - LOGIN & REGISTRATION UI
+   Basic Project Styling
+===================================================== */
+
+body {
+    min-height: 100vh;
+    background: #f5f7fb;
+    font-family: Arial, sans-serif;
+}
+
+main {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+h1 {
+    color: #212529;
+}
