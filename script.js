@@ -5,7 +5,10 @@
 
 
 // Confirm that JavaScript is connected
-console.log("Task 2 Login & Registration UI loaded successfully.");
+
+console.log(
+    "Task 2 Login & Registration UI loaded successfully."
+);
 
 
 // =====================================================
@@ -30,7 +33,9 @@ navbarLinks.forEach(function (link) {
         ) {
 
             const bootstrapCollapse =
-                bootstrap.Collapse.getInstance(navbarCollapse);
+                bootstrap.Collapse.getInstance(
+                    navbarCollapse
+                );
 
             if (bootstrapCollapse) {
                 bootstrapCollapse.hide();
@@ -41,3 +46,25 @@ navbarLinks.forEach(function (link) {
     });
 
 });
+
+
+// =====================================================
+// AUTH MODAL
+// =====================================================
+
+const authModal = document.getElementById("authModal");
+
+if (authModal) {
+
+    authModal.addEventListener(
+        "shown.bs.modal",
+        function () {
+
+            console.log(
+                "Authentication modal opened."
+            );
+
+        }
+    );
+
+}

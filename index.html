@@ -66,12 +66,16 @@
                     </li>
 
                     <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
-                        <a
-                            href="#auth"
+
+                        <button
+                            type="button"
                             class="btn btn-light px-4"
+                            data-bs-toggle="modal"
+                            data-bs-target="#authModal"
                         >
                             Login / Register
-                        </a>
+                        </button>
+
                     </li>
 
                 </ul>
@@ -114,13 +118,15 @@
 
                     <div class="d-flex flex-column flex-sm-row justify-content-center justify-content-lg-start gap-3">
 
-                        <a
-                            href="#auth"
+                        <button
+                            type="button"
                             class="btn btn-primary btn-lg px-4"
+                            data-bs-toggle="modal"
+                            data-bs-target="#authModal"
                         >
                             Get Started
                             <i class="bi bi-arrow-right ms-2"></i>
-                        </a>
+                        </button>
 
                         <a
                             href="#features"
@@ -159,8 +165,13 @@
                             <div class="col-6">
 
                                 <div class="mini-card">
+
                                     <i class="bi bi-person-check"></i>
-                                    <span>Login</span>
+
+                                    <span>
+                                        Login
+                                    </span>
+
                                 </div>
 
                             </div>
@@ -168,8 +179,13 @@
                             <div class="col-6">
 
                                 <div class="mini-card">
+
                                     <i class="bi bi-person-plus"></i>
-                                    <span>Register</span>
+
+                                    <span>
+                                        Register
+                                    </span>
+
                                 </div>
 
                             </div>
@@ -335,7 +351,12 @@
                             Continue to your account.
                         </p>
 
-                        <button class="btn btn-primary">
+                        <button
+                            type="button"
+                            class="btn btn-primary"
+                            data-bs-toggle="modal"
+                            data-bs-target="#authModal"
+                        >
                             Login
                         </button>
 
@@ -359,7 +380,12 @@
                             Create your account.
                         </p>
 
-                        <button class="btn btn-dark">
+                        <button
+                            type="button"
+                            class="btn btn-dark"
+                            data-bs-toggle="modal"
+                            data-bs-target="#authModal"
+                        >
                             Register
                         </button>
 
@@ -372,6 +398,97 @@
         </div>
 
     </section>
+
+
+    <!-- =====================================================
+         AUTHENTICATION MODAL
+    ====================================================== -->
+
+    <div
+        class="modal fade"
+        id="authModal"
+        tabindex="-1"
+        aria-labelledby="authModalLabel"
+        aria-hidden="true"
+    >
+
+        <div class="modal-dialog modal-dialog-centered">
+
+            <div class="modal-content auth-modal">
+
+                <div class="modal-header">
+
+                    <h5
+                        class="modal-title fw-bold"
+                        id="authModalLabel"
+                    >
+                        Welcome to AuthPortal
+                    </h5>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                    ></button>
+
+                </div>
+
+
+                <div class="modal-body text-center">
+
+                    <div class="modal-icon">
+
+                        <i class="bi bi-shield-lock"></i>
+
+                    </div>
+
+                    <h4>
+                        Choose an option
+                    </h4>
+
+                    <p class="text-muted">
+                        Login to your existing account or
+                        create a new account.
+                    </p>
+
+
+                    <div class="d-grid gap-3 mt-4">
+
+                        <button
+                            type="button"
+                            class="btn btn-primary btn-lg"
+                        >
+                            <i class="bi bi-box-arrow-in-right me-2"></i>
+                            Continue to Login
+                        </button>
+
+                        <button
+                            type="button"
+                            class="btn btn-outline-dark btn-lg"
+                        >
+                            <i class="bi bi-person-plus me-2"></i>
+                            Create an Account
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="modal-footer justify-content-center">
+
+                    <small class="text-muted">
+                        Responsive Authentication UI
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
 
 
     <!-- =====================================================

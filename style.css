@@ -283,6 +283,47 @@ body {
 
 
 /* =====================================================
+   AUTH MODAL
+===================================================== */
+
+.auth-modal {
+    border: none;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.auth-modal .modal-header {
+    border-bottom: 1px solid #edf0f4;
+    padding: 20px 25px;
+}
+
+.auth-modal .modal-body {
+    padding: 35px 30px;
+}
+
+.modal-icon {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    background: #e8f0ff;
+    color: #0d6efd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+}
+
+.auth-modal .modal-body h4 {
+    font-weight: 700;
+}
+
+.auth-modal .modal-footer {
+    border-top: 1px solid #edf0f4;
+}
+
+
+/* =====================================================
    FOOTER
 ===================================================== */
 
@@ -353,5 +394,9 @@ body {
 
     .auth-option {
         padding: 35px 25px;
+    }
+
+    .auth-modal .modal-body {
+        padding: 30px 20px;
     }
 }
