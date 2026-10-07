@@ -1,13 +1,11 @@
 // =====================================================
 // TASK 2 - STEP 2
-// RESPONSIVE NAVIGATION
+// RESPONSIVE GRID & LAYOUT
 // =====================================================
 
 
-// Confirm JavaScript is connected
-
 console.log(
-    "Task 2 Step 2 loaded successfully."
+    "Task 2 Step 2 - Responsive grid loaded successfully."
 );
 
 
@@ -38,7 +36,9 @@ navbarLinks.forEach(function (link) {
                 );
 
             if (bootstrapCollapse) {
+
                 bootstrapCollapse.hide();
+
             }
 
         }

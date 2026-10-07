@@ -1,6 +1,6 @@
 /* =====================================================
    TASK 2 - STEP 2
-   RESPONSIVE NAVIGATION & LAYOUT
+   RESPONSIVE GRID & LAYOUT
 ===================================================== */
 
 
@@ -169,6 +169,46 @@ body {
 
 
 /* =====================================================
+   STATISTICS
+===================================================== */
+
+.stats-section {
+    padding: 35px 0;
+    background: #ffffff;
+}
+
+.stat-card {
+    height: 100%;
+    padding: 25px 15px;
+    text-align: center;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    background: #ffffff;
+    transition: 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.07);
+}
+
+.stat-card i {
+    font-size: 1.5rem;
+    color: #0d6efd;
+}
+
+.stat-card h3 {
+    margin: 10px 0 5px;
+    font-weight: 800;
+}
+
+.stat-card p {
+    margin: 0;
+    color: #6c757d;
+}
+
+
+/* =====================================================
    FEATURES
 ===================================================== */
 
@@ -259,11 +299,6 @@ body {
     margin-bottom: 45px;
 }
 
-
-/* =====================================================
-   AUTH OPTIONS
-===================================================== */
-
 .auth-option {
     height: 100%;
     padding: 45px 35px;
@@ -296,7 +331,7 @@ body {
 
 
 /* =====================================================
-   AUTH MODAL
+   MODAL
 ===================================================== */
 
 .auth-modal {
@@ -407,6 +442,18 @@ body {
 
     .hero-card {
         padding: 30px 20px;
+    }
+
+    .stats-section {
+        padding: 25px 0;
+    }
+
+    .stat-card {
+        padding: 20px 10px;
+    }
+
+    .stat-card h3 {
+        font-size: 1.3rem;
     }
 
     .features-section,
