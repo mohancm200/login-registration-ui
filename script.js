@@ -5,16 +5,13 @@
 
 console.log("AuthPortal authentication interface loaded.");
 
-// Mobile navbar closes after selecting a navigation link.
+// Close the mobile navbar after a navigation link is clicked.
 const navbarLinks = document.querySelectorAll(".navbar-nav .nav-link");
 const navbarCollapse = document.querySelector(".navbar-collapse");
 
 navbarLinks.forEach(function (link) {
     link.addEventListener("click", function () {
-        if (
-            navbarCollapse &&
-            navbarCollapse.classList.contains("show")
-        ) {
+        if (navbarCollapse && navbarCollapse.classList.contains("show")) {
             const collapseInstance =
                 bootstrap.Collapse.getInstance(navbarCollapse);
 
@@ -25,23 +22,23 @@ navbarLinks.forEach(function (link) {
     });
 });
 
-// Authentication modal and panels.
+// Get authentication elements.
 const authModal = document.getElementById("authModal");
 const loginPanel = document.getElementById("loginPanel");
 const registerPanel = document.getElementById("registerPanel");
 const modalTitle = document.getElementById("authModalLabel");
 const formMessage = document.getElementById("formMessage");
 
-function showMessage(message, type) {
-    formMessage.textContent = message;
-    formMessage.className = "alert alert-" + type + " mt-3 mb-0";
-    formMessage.hidden = false;
-}
-
 function clearMessage() {
     formMessage.textContent = "";
     formMessage.hidden = true;
     formMessage.className = "alert mt-3 mb-0";
+}
+
+function showMessage(message, type) {
+    formMessage.textContent = message;
+    formMessage.className = "alert alert-" + type + " mt-3 mb-0";
+    formMessage.hidden = false;
 }
 
 function showLogin() {
@@ -58,11 +55,11 @@ function showRegister() {
     clearMessage();
 }
 
-// Switch between Login and Registration.
+// Switch between the login and registration panels.
 document.getElementById("showRegister").addEventListener("click", showRegister);
 document.getElementById("showLogin").addEventListener("click", showLogin);
 
-// Open the modal directly in the selected view.
+// Open the correct panel when either Authentication card is selected.
 document.querySelectorAll("[data-auth-view]").forEach(function (button) {
     button.addEventListener("click", function () {
         if (button.dataset.authView === "register") {
@@ -73,12 +70,14 @@ document.querySelectorAll("[data-auth-view]").forEach(function (button) {
     });
 });
 
-// Reset modal to Login when it is closed.
+// Reset the modal when closed.
 authModal.addEventListener("hidden.bs.modal", function () {
     showLogin();
+    document.getElementById("loginForm").reset();
+    document.getElementById("registerForm").reset();
 });
 
-// Login form demo.
+// Handle login without putting form values in the URL.
 document.getElementById("loginForm").addEventListener("submit", function (event) {
     event.preventDefault();
 
@@ -88,12 +87,12 @@ document.getElementById("loginForm").addEventListener("submit", function (event)
     }
 
     showMessage(
-        "Login form validated successfully. Real authentication will be added with a backend.",
+        "Login form validated successfully. Real authentication requires a backend.",
         "success"
     );
 });
 
-// Registration form demo.
+// Handle registration without putting form values in the URL.
 document.getElementById("registerForm").addEventListener("submit", function (event) {
     event.preventDefault();
 
@@ -106,27 +105,27 @@ document.getElementById("registerForm").addEventListener("submit", function (eve
     const confirmPassword = document.getElementById("confirmPassword").value;
 
     if (password !== confirmPassword) {
-        document.getElementById("confirmPassword").setCustomValidity(
-            "Passwords do not match."
-        );
-        document.getElementById("confirmPassword").reportValidity();
-        document.getElementById("confirmPassword").setCustomValidity("");
+        showMessage("Passwords do not match. Please try again.", "danger");
+        document.getElementById("confirmPassword").focus();
         return;
     }
 
     showMessage(
-        "Registration form validated successfully. Account creation will be connected to a backend later.",
+        "Registration form validated successfully. Account creation requires a backend.",
         "success"
     );
 });
 
-// Demo message for Forgot Password.
+// Forgot password demonstration.
 document.getElementById("forgotPassword").addEventListener("click", function (event) {
     event.preventDefault();
-    showMessage("Password recovery will be implemented in a future step.", "info");
+    showMessage(
+        "Password recovery will be implemented in a future step.",
+        "info"
+    );
 });
 
-// Screen size check.
+// Screen-size check.
 function checkScreenSize() {
     console.log(
         window.innerWidth < 768
