@@ -1,217 +1,219 @@
 
-"use strict";
+document.addEventListener("DOMContentLoaded", function () {
+    const authModal = document.getElementById("authModal");
+    const loginPanel = document.getElementById("loginPanel");
+    const registerPanel = document.getElementById("registerPanel");
+    const authModalLabel = document.getElementById("authModalLabel");
+    const formMessage = document.getElementById("formMessage");
 
-// Task 2 - Step 5, Commit 1: Bootstrap Carousel and Components
+    const loginForm = document.getElementById("loginForm");
+    const registerForm = document.getElementById("registerForm");
 
-const navbarLinks = document.querySelectorAll(".navbar-nav .nav-link");
-const navbarCollapse = document.querySelector(".navbar-collapse");
+    function showMessage(message, type) {
+        if (!formMessage) return;
 
-navbarLinks.forEach(function (link) {
-    link.addEventListener("click", function () {
-        if (navbarCollapse && navbarCollapse.classList.contains("show")) {
-            const instance = bootstrap.Collapse.getInstance(navbarCollapse);
-            if (instance) instance.hide();
+        formMessage.textContent = message;
+        formMessage.className = "alert alert-" + type + " mt-3 mb-0";
+        formMessage.hidden = false;
+    }
+
+    function clearMessage() {
+        if (!formMessage) return;
+
+        formMessage.textContent = "";
+        formMessage.hidden = true;
+        formMessage.className = "alert mt-3 mb-0";
+    }
+
+    function showLogin() {
+        if (loginPanel) loginPanel.hidden = false;
+        if (registerPanel) registerPanel.hidden = true;
+
+        if (authModalLabel) {
+            authModalLabel.textContent = "Login to AuthPortal";
         }
-    });
-});
 
-// Authentication elements.
-const authModal = document.getElementById("authModal");
-const loginPanel = document.getElementById("loginPanel");
-const registerPanel = document.getElementById("registerPanel");
-const modalTitle = document.getElementById("authModalLabel");
-const formMessage = document.getElementById("formMessage");
-
-const loginForm = document.getElementById("loginForm");
-const registerForm = document.getElementById("registerForm");
-const registerPassword = document.getElementById("registerPassword");
-const confirmPassword = document.getElementById("confirmPassword");
-
-let submissionInProgress = false;
-
-function clearMessage() {
-    formMessage.textContent = "";
-    formMessage.hidden = true;
-    formMessage.className = "alert mt-3 mb-0";
-}
-
-function showMessage(message, type) {
-    formMessage.textContent = message;
-    formMessage.className = "alert alert-" + type + " mt-3 mb-0";
-    formMessage.hidden = false;
-}
-
-function showLogin() {
-    loginPanel.hidden = false;
-    registerPanel.hidden = true;
-    modalTitle.textContent = "Login to AuthPortal";
-    clearMessage();
-}
-
-function showRegister() {
-    loginPanel.hidden = true;
-    registerPanel.hidden = false;
-    modalTitle.textContent = "Create an Account";
-    clearMessage();
-}
-
-document.getElementById("showRegister").addEventListener("click", showRegister);
-document.getElementById("showLogin").addEventListener("click", showLogin);
-
-document.querySelectorAll("[data-auth-view]").forEach(function (button) {
-    button.addEventListener("click", function () {
-        button.dataset.authView === "register" ? showRegister() : showLogin();
-    });
-});
-
-// Show/hide password buttons.
-document.querySelectorAll("[data-toggle-password]").forEach(function (button) {
-    button.addEventListener("click", function () {
-        const input = document.getElementById(button.dataset.togglePassword);
-        const icon = button.querySelector("i");
-        const show = input.type === "password";
-
-        input.type = show ? "text" : "password";
-        icon.classList.toggle("bi-eye", !show);
-        icon.classList.toggle("bi-eye-slash", show);
-        button.setAttribute("aria-label", show ? "Hide password" : "Show password");
-        button.setAttribute("aria-pressed", String(show));
-    });
-});
-
-// Validate forms.
-function validateForm(form) {
-    form.classList.add("was-validated");
-    return form.checkValidity();
-}
-
-function setLoading(button, loading) {
-    button.disabled = loading;
-    button.querySelector(".button-label").classList.toggle("d-none", loading);
-    button.querySelector(".button-loading").classList.toggle("d-none", !loading);
-}
-
-function finishLoading(button) {
-    setLoading(button, false);
-    submissionInProgress = false;
-}
-
-// Login form.
-loginForm.addEventListener("submit", function (event) {
-    event.preventDefault();
-    if (submissionInProgress) return;
-
-    clearMessage();
-
-    if (!validateForm(loginForm)) {
-        showMessage("Please correct the highlighted fields.", "danger");
-        return;
+        clearMessage();
     }
 
-    submissionInProgress = true;
-    const button = document.getElementById("loginSubmit");
-    setLoading(button, true);
+    function showRegister() {
+        if (loginPanel) loginPanel.hidden = true;
+        if (registerPanel) registerPanel.hidden = false;
 
-    window.setTimeout(function () {
-        finishLoading(button);
-        showMessage(
-            "Demo complete: your form passed validation. Real login requires a backend.",
-            "success"
-        );
-    }, 900);
-});
+        if (authModalLabel) {
+            authModalLabel.textContent = "Register with AuthPortal";
+        }
 
-// Registration password matching.
-function validatePasswordMatch() {
-    confirmPassword.setCustomValidity(
-        confirmPassword.value !== registerPassword.value
-            ? "Passwords do not match."
-            : ""
-    );
-}
-
-registerPassword.addEventListener("input", validatePasswordMatch);
-confirmPassword.addEventListener("input", validatePasswordMatch);
-
-// Registration form.
-registerForm.addEventListener("submit", function (event) {
-    event.preventDefault();
-    if (submissionInProgress) return;
-
-    clearMessage();
-    validatePasswordMatch();
-
-    if (!validateForm(registerForm)) {
-        showMessage("Please correct the highlighted fields before registering.", "danger");
-        return;
+        clearMessage();
     }
 
-    submissionInProgress = true;
-    const button = document.getElementById("registerSubmit");
-    setLoading(button, true);
+    document.querySelectorAll("[data-auth-view]").forEach(function (button) {
+        button.addEventListener("click", function () {
+            if (button.dataset.authView === "register") {
+                showRegister();
+            } else {
+                showLogin();
+            }
+        });
+    });
 
-    window.setTimeout(function () {
-        finishLoading(button);
-        showMessage(
-            "Demo complete: your registration form passed validation. Real account creation requires a backend.",
-            "success"
-        );
-    }, 900);
-});
+    const showRegisterButton = document.getElementById("showRegister");
+    const showLoginButton = document.getElementById("showLogin");
 
-// Clear messages as the user edits fields.
-document.querySelectorAll("#loginForm input, #registerForm input").forEach(function (input) {
-    input.addEventListener("input", clearMessage);
-});
+    if (showRegisterButton) {
+        showRegisterButton.addEventListener("click", showRegister);
+    }
 
-// Forgot password demonstration.
-document.getElementById("forgotPassword").addEventListener("click", function (event) {
-    event.preventDefault();
-    showMessage("Password recovery will be implemented in a future step.", "info");
-});
-
-// Reset forms when the modal closes.
-authModal.addEventListener("hidden.bs.modal", function () {
-    loginForm.reset();
-    registerForm.reset();
-    loginForm.classList.remove("was-validated");
-    registerForm.classList.remove("was-validated");
-    confirmPassword.setCustomValidity("");
+    if (showLoginButton) {
+        showLoginButton.addEventListener("click", showLogin);
+    }
 
     document.querySelectorAll("[data-toggle-password]").forEach(function (button) {
-        const input = document.getElementById(button.dataset.togglePassword);
-        const icon = button.querySelector("i");
+        button.addEventListener("click", function () {
+            const inputId = button.dataset.togglePassword;
+            const passwordInput = document.getElementById(inputId);
 
-        input.type = "password";
-        icon.classList.remove("bi-eye-slash");
-        icon.classList.add("bi-eye");
-        button.setAttribute("aria-label", "Show password");
-        button.setAttribute("aria-pressed", "false");
+            if (!passwordInput) return;
+
+            const shouldShow = passwordInput.type === "password";
+            passwordInput.type = shouldShow ? "text" : "password";
+
+            button.innerHTML = shouldShow
+                ? '<i class="bi bi-eye-slash"></i>'
+                : '<i class="bi bi-eye"></i>';
+
+            button.setAttribute(
+                "aria-label",
+                shouldShow ? "Hide password" : "Show password"
+            );
+
+            button.setAttribute("aria-pressed", String(shouldShow));
+        });
     });
 
-    showLogin();
+    function validateField(input) {
+        if (!input) return true;
+
+        input.classList.toggle("is-invalid", !input.checkValidity());
+        input.classList.toggle("is-valid", input.checkValidity());
+
+        return input.checkValidity();
+    }
+
+    if (loginForm) {
+        loginForm.querySelectorAll("input[required]").forEach(function (input) {
+            input.addEventListener("input", function () {
+                validateField(input);
+                clearMessage();
+            });
+        });
+
+        loginForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+            clearMessage();
+
+            const email = document.getElementById("loginEmail");
+            const password = document.getElementById("loginPassword");
+
+            const emailValid = validateField(email);
+            const passwordValid = validateField(password);
+
+            if (!emailValid || !passwordValid) {
+                showMessage(
+                    "Please enter a valid email address and password.",
+                    "danger"
+                );
+
+                const firstInvalid = loginForm.querySelector(":invalid");
+                if (firstInvalid) firstInvalid.focus();
+
+                return;
+            }
+
+            showMessage(
+                "Login form validated successfully. This is a demo only; no real account authentication is performed.",
+                "success"
+            );
+        });
+    }
+
+    if (registerForm) {
+        registerForm.querySelectorAll("input[required]").forEach(function (input) {
+            input.addEventListener("input", function () {
+                validateField(input);
+                clearMessage();
+            });
+        });
+
+        registerForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+            clearMessage();
+
+            const name = document.getElementById("registerName");
+            const email = document.getElementById("registerEmail");
+            const password = document.getElementById("registerPassword");
+            const confirmPassword = document.getElementById("confirmPassword");
+            const agreeTerms = document.getElementById("agreeTerms");
+
+            const fieldsValid = [
+                validateField(name),
+                validateField(email),
+                validateField(password),
+                validateField(confirmPassword),
+                validateField(agreeTerms)
+            ].every(Boolean);
+
+            if (!fieldsValid) {
+                showMessage(
+                    "Please complete all required fields correctly.",
+                    "danger"
+                );
+
+                const firstInvalid = registerForm.querySelector(":invalid");
+                if (firstInvalid) firstInvalid.focus();
+
+                return;
+            }
+
+            if (password.value !== confirmPassword.value) {
+                confirmPassword.classList.add("is-invalid");
+                confirmPassword.classList.remove("is-valid");
+
+                showMessage(
+                    "Passwords do not match. Please enter the same password in both fields.",
+                    "danger"
+                );
+
+                confirmPassword.focus();
+                return;
+            }
+
+            confirmPassword.classList.remove("is-invalid");
+            confirmPassword.classList.add("is-valid");
+
+            showMessage(
+                "Registration form validated successfully. This is a demo only; no account has been created.",
+                "success"
+            );
+        });
+    }
+
+    const forgotPassword = document.getElementById("forgotPassword");
+
+    if (forgotPassword) {
+        forgotPassword.addEventListener("click", function (event) {
+            event.preventDefault();
+
+            showMessage(
+                "Password recovery is a demo feature and is not connected to an account system.",
+                "info"
+            );
+        });
+    }
+
+    if (authModal) {
+        authModal.addEventListener("hidden.bs.modal", function () {
+            clearMessage();
+        });
+    }
 });
-
-// Carousel initialization. Bootstrap also handles the controls automatically.
-const carouselElement = document.getElementById("featureCarousel");
-
-if (carouselElement) {
-    new bootstrap.Carousel(carouselElement, {
-        interval: 5000,
-        ride: "carousel",
-        pause: "hover",
-        wrap: true
-    });
-}
-
-// Responsive screen-size information.
-function checkScreenSize() {
-    console.log(
-        window.innerWidth < 768
-            ? "Mobile / small-screen layout active."
-            : "Tablet / desktop layout active."
-    );
-}
-
-checkScreenSize();
-window.addEventListener("resize", checkScreenSize);
