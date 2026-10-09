@@ -9,6 +9,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const loginForm = document.getElementById("loginForm");
     const registerForm = document.getElementById("registerForm");
 
+    const registerPassword = document.getElementById("registerPassword");
+    const confirmPassword = document.getElementById("confirmPassword");
+
     function showMessage(message, type) {
         if (!formMessage) return;
 
@@ -28,22 +31,14 @@ document.addEventListener("DOMContentLoaded", function () {
     function showLogin() {
         if (loginPanel) loginPanel.hidden = false;
         if (registerPanel) registerPanel.hidden = true;
-
-        if (authModalLabel) {
-            authModalLabel.textContent = "Login to AuthPortal";
-        }
-
+        if (authModalLabel) authModalLabel.textContent = "Login to AuthPortal";
         clearMessage();
     }
 
     function showRegister() {
         if (loginPanel) loginPanel.hidden = true;
         if (registerPanel) registerPanel.hidden = false;
-
-        if (authModalLabel) {
-            authModalLabel.textContent = "Register with AuthPortal";
-        }
-
+        if (authModalLabel) authModalLabel.textContent = "Register with AuthPortal";
         clearMessage();
     }
 
@@ -57,47 +52,45 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    const showRegisterButton = document.getElementById("showRegister");
-    const showLoginButton = document.getElementById("showLogin");
-
-    if (showRegisterButton) {
-        showRegisterButton.addEventListener("click", showRegister);
-    }
-
-    if (showLoginButton) {
-        showLoginButton.addEventListener("click", showLogin);
-    }
+    document.getElementById("showRegister")?.addEventListener("click", showRegister);
+    document.getElementById("showLogin")?.addEventListener("click", showLogin);
 
     document.querySelectorAll("[data-toggle-password]").forEach(function (button) {
         button.addEventListener("click", function () {
-            const inputId = button.dataset.togglePassword;
-            const passwordInput = document.getElementById(inputId);
+            const input = document.getElementById(button.dataset.togglePassword);
+            if (!input) return;
 
-            if (!passwordInput) return;
-
-            const shouldShow = passwordInput.type === "password";
-            passwordInput.type = shouldShow ? "text" : "password";
-
-            button.innerHTML = shouldShow
+            const show = input.type === "password";
+            input.type = show ? "text" : "password";
+            button.innerHTML = show
                 ? '<i class="bi bi-eye-slash"></i>'
                 : '<i class="bi bi-eye"></i>';
-
-            button.setAttribute(
-                "aria-label",
-                shouldShow ? "Hide password" : "Show password"
-            );
-
-            button.setAttribute("aria-pressed", String(shouldShow));
+            button.setAttribute("aria-label", show ? "Hide password" : "Show password");
+            button.setAttribute("aria-pressed", String(show));
         });
     });
 
     function validateField(input) {
-        if (!input) return true;
+        if (!input) return false;
 
-        input.classList.toggle("is-invalid", !input.checkValidity());
-        input.classList.toggle("is-valid", input.checkValidity());
+        const valid = input.checkValidity();
+        input.classList.toggle("is-invalid", !valid);
+        input.classList.toggle("is-valid", valid);
+        return valid;
+    }
 
-        return input.checkValidity();
+    function validatePasswordMatch() {
+        if (!registerPassword || !confirmPassword) return false;
+
+        if (confirmPassword.value === "") {
+            confirmPassword.classList.remove("is-valid", "is-invalid");
+            return false;
+        }
+
+        const matches = registerPassword.value === confirmPassword.value;
+        confirmPassword.classList.toggle("is-valid", matches);
+        confirmPassword.classList.toggle("is-invalid", !matches);
+        return matches;
     }
 
     if (loginForm) {
@@ -115,23 +108,14 @@ document.addEventListener("DOMContentLoaded", function () {
             const email = document.getElementById("loginEmail");
             const password = document.getElementById("loginPassword");
 
-            const emailValid = validateField(email);
-            const passwordValid = validateField(password);
-
-            if (!emailValid || !passwordValid) {
-                showMessage(
-                    "Please enter a valid email address and password.",
-                    "danger"
-                );
-
-                const firstInvalid = loginForm.querySelector(":invalid");
-                if (firstInvalid) firstInvalid.focus();
-
+            if (!validateField(email) || !validateField(password)) {
+                showMessage("Please enter a valid email address and password.", "danger");
+                loginForm.querySelector(":invalid")?.focus();
                 return;
             }
 
             showMessage(
-                "Login form validated successfully. This is a demo only; no real account authentication is performed.",
+                "Login form validated successfully. This demo does not authenticate real accounts.",
                 "success"
             );
         });
@@ -145,75 +129,56 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         });
 
+        registerPassword?.addEventListener("input", function () {
+            validateField(registerPassword);
+            validatePasswordMatch();
+            clearMessage();
+        });
+
+        confirmPassword?.addEventListener("input", function () {
+            validatePasswordMatch();
+            clearMessage();
+        });
+
         registerForm.addEventListener("submit", function (event) {
             event.preventDefault();
             clearMessage();
 
             const name = document.getElementById("registerName");
             const email = document.getElementById("registerEmail");
-            const password = document.getElementById("registerPassword");
-            const confirmPassword = document.getElementById("confirmPassword");
-            const agreeTerms = document.getElementById("agreeTerms");
+            const password = registerPassword;
+            const confirmation = confirmPassword;
+            const terms = document.getElementById("agreeTerms");
 
-            const fieldsValid = [
-                validateField(name),
-                validateField(email),
-                validateField(password),
-                validateField(confirmPassword),
-                validateField(agreeTerms)
-            ].every(Boolean);
+            const nameValid = validateField(name);
+            const emailValid = validateField(email);
+            const passwordValid = validateField(password);
+            const termsValid = validateField(terms);
+            const passwordsMatch = validatePasswordMatch();
 
-            if (!fieldsValid) {
-                showMessage(
-                    "Please complete all required fields correctly.",
-                    "danger"
-                );
-
-                const firstInvalid = registerForm.querySelector(":invalid");
-                if (firstInvalid) firstInvalid.focus();
-
+            if (!nameValid || !emailValid || !passwordValid || !termsValid) {
+                showMessage("Please complete all required fields correctly.", "danger");
+                registerForm.querySelector(":invalid")?.focus();
                 return;
             }
 
-            if (password.value !== confirmPassword.value) {
-                confirmPassword.classList.add("is-invalid");
-                confirmPassword.classList.remove("is-valid");
-
-                showMessage(
-                    "Passwords do not match. Please enter the same password in both fields.",
-                    "danger"
-                );
-
-                confirmPassword.focus();
+            if (!passwordsMatch) {
+                showMessage("Passwords do not match. Please enter the same password twice.", "danger");
+                confirmation?.focus();
                 return;
             }
-
-            confirmPassword.classList.remove("is-invalid");
-            confirmPassword.classList.add("is-valid");
 
             showMessage(
-                "Registration form validated successfully. This is a demo only; no account has been created.",
+                "Registration form validated successfully. This is a demo; no account has been created.",
                 "success"
             );
         });
     }
 
-    const forgotPassword = document.getElementById("forgotPassword");
+    document.getElementById("forgotPassword")?.addEventListener("click", function (event) {
+        event.preventDefault();
+        showMessage("Password recovery is a demo feature and is not connected to an account system.", "info");
+    });
 
-    if (forgotPassword) {
-        forgotPassword.addEventListener("click", function (event) {
-            event.preventDefault();
-
-            showMessage(
-                "Password recovery is a demo feature and is not connected to an account system.",
-                "info"
-            );
-        });
-    }
-
-    if (authModal) {
-        authModal.addEventListener("hidden.bs.modal", function () {
-            clearMessage();
-        });
-    }
+    authModal?.addEventListener("hidden.bs.modal", clearMessage);
 });
