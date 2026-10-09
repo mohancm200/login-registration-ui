@@ -87,12 +87,8 @@
                         <h3>User Authentication</h3>
                         <p>Responsive authentication interface for desktop, tablet and mobile devices.</p>
                         <div class="row g-3 mt-3">
-                            <div class="col-6">
-                                <div class="mini-card"><i class="bi bi-person-check"></i><span>Login</span></div>
-                            </div>
-                            <div class="col-6">
-                                <div class="mini-card"><i class="bi bi-person-plus"></i><span>Register</span></div>
-                            </div>
+                            <div class="col-6"><div class="mini-card"><i class="bi bi-person-check"></i><span>Login</span></div></div>
+                            <div class="col-6"><div class="mini-card"><i class="bi bi-person-plus"></i><span>Register</span></div></div>
                         </div>
                     </div>
                 </div>
@@ -164,7 +160,7 @@
         </div>
     </section>
 
-    <!-- Login and Registration Modal -->
+    <!-- Authentication Modal -->
     <div class="modal fade" id="authModal" tabindex="-1"
          aria-labelledby="authModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -178,17 +174,16 @@
                 <div class="modal-body">
                     <div class="modal-icon"><i class="bi bi-shield-lock"></i></div>
 
-                    <!-- Login Form -->
                     <div id="loginPanel">
                         <h4 class="text-center mb-4">Welcome Back!</h4>
 
-                        <form id="loginForm" method="post">
+                        <form id="loginForm" method="post" novalidate>
                             <div class="mb-3">
                                 <label for="loginEmail" class="form-label">Email Address</label>
                                 <input type="email" class="form-control"
                                        id="loginEmail" name="email"
-                                       placeholder="Enter your email"
-                                       autocomplete="email" required>
+                                       placeholder="Enter your email" autocomplete="email" required>
+                                <div class="invalid-feedback">Enter a valid email address.</div>
                             </div>
 
                             <div class="mb-3">
@@ -204,6 +199,7 @@
                                         <i class="bi bi-eye"></i>
                                     </button>
                                 </div>
+                                <div class="invalid-feedback">Password is required.</div>
                             </div>
 
                             <div class="d-flex justify-content-between align-items-center mb-4">
@@ -214,8 +210,12 @@
                                 <a href="#" id="forgotPassword" class="small text-decoration-none">Forgot password?</a>
                             </div>
 
-                            <button type="submit" class="btn btn-primary btn-lg w-100">
-                                <i class="bi bi-box-arrow-in-right me-2"></i>Login
+                            <button type="submit" class="btn btn-primary btn-lg w-100" id="loginSubmit">
+                                <span class="button-label"><i class="bi bi-box-arrow-in-right me-2"></i>Login</span>
+                                <span class="button-loading d-none">
+                                    <span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
+                                    Please wait...
+                                </span>
                             </button>
                         </form>
 
@@ -225,25 +225,24 @@
                         </p>
                     </div>
 
-                    <!-- Registration Form -->
                     <div id="registerPanel" hidden>
                         <h4 class="text-center mb-4">Create Your Account</h4>
 
-                        <form id="registerForm" method="post">
+                        <form id="registerForm" method="post" novalidate>
                             <div class="mb-3">
                                 <label for="registerName" class="form-label">Full Name</label>
                                 <input type="text" class="form-control"
                                        id="registerName" name="name"
-                                       placeholder="Enter your full name"
-                                       autocomplete="name" required>
+                                       placeholder="Enter your full name" autocomplete="name" required>
+                                <div class="invalid-feedback">Please enter your full name.</div>
                             </div>
 
                             <div class="mb-3">
                                 <label for="registerEmail" class="form-label">Email Address</label>
                                 <input type="email" class="form-control"
                                        id="registerEmail" name="email"
-                                       placeholder="Enter your email"
-                                       autocomplete="email" required>
+                                       placeholder="Enter your email" autocomplete="email" required>
+                                <div class="invalid-feedback">Enter a valid email address.</div>
                             </div>
 
                             <div class="mb-3">
@@ -260,6 +259,7 @@
                                     </button>
                                 </div>
                                 <div class="form-text">Use at least 8 characters.</div>
+                                <div class="invalid-feedback">Password must contain at least 8 characters.</div>
                             </div>
 
                             <div class="mb-3">
@@ -275,6 +275,7 @@
                                         <i class="bi bi-eye"></i>
                                     </button>
                                 </div>
+                                <div class="invalid-feedback">Passwords must match.</div>
                             </div>
 
                             <div class="form-check mb-4">
@@ -283,10 +284,15 @@
                                 <label class="form-check-label" for="agreeTerms">
                                     I agree to the terms and conditions.
                                 </label>
+                                <div class="invalid-feedback">Please accept the terms.</div>
                             </div>
 
-                            <button type="submit" class="btn btn-dark btn-lg w-100">
-                                <i class="bi bi-person-plus me-2"></i>Create Account
+                            <button type="submit" class="btn btn-dark btn-lg w-100" id="registerSubmit">
+                                <span class="button-label"><i class="bi bi-person-plus me-2"></i>Create Account</span>
+                                <span class="button-loading d-none">
+                                    <span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
+                                    Please wait...
+                                </span>
                             </button>
                         </form>
 
@@ -296,7 +302,7 @@
                         </p>
                     </div>
 
-                    <div id="formMessage" class="alert mt-3 mb-0" role="status" hidden></div>
+                    <div id="formMessage" class="alert mt-3 mb-0" role="status" aria-live="polite" hidden></div>
                 </div>
 
                 <div class="modal-footer justify-content-center">
