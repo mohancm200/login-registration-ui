@@ -1,11 +1,11 @@
 
 "use strict";
 
-// Task 2 - Step 3, Commit 3: Form Validation
+// Task 2 - Step 3, Commit 4: Show/Hide Password
 
-console.log("AuthPortal form validation loaded.");
+console.log("AuthPortal authentication interface loaded.");
 
-// Close the mobile navbar after clicking a navigation link.
+// Mobile navigation.
 const navbarLinks = document.querySelectorAll(".navbar-nav .nav-link");
 const navbarCollapse = document.querySelector(".navbar-collapse");
 
@@ -22,7 +22,7 @@ navbarLinks.forEach(function (link) {
     });
 });
 
-// Authentication elements.
+// Form and modal elements.
 const authModal = document.getElementById("authModal");
 const loginPanel = document.getElementById("loginPanel");
 const registerPanel = document.getElementById("registerPanel");
@@ -75,7 +75,33 @@ document.querySelectorAll("[data-auth-view]").forEach(function (button) {
     });
 });
 
-// Prevent credentials from appearing in the URL.
+// Show or hide each password field.
+document.querySelectorAll("[data-toggle-password]").forEach(function (button) {
+    button.addEventListener("click", function () {
+        const inputId = button.dataset.togglePassword;
+        const passwordInput = document.getElementById(inputId);
+        const icon = button.querySelector("i");
+
+        if (!passwordInput || !icon) {
+            return;
+        }
+
+        const shouldShow = passwordInput.type === "password";
+
+        passwordInput.type = shouldShow ? "text" : "password";
+        icon.classList.toggle("bi-eye", !shouldShow);
+        icon.classList.toggle("bi-eye-slash", shouldShow);
+
+        button.setAttribute(
+            "aria-label",
+            shouldShow ? "Hide password" : "Show password"
+        );
+
+        button.setAttribute("aria-pressed", String(shouldShow));
+    });
+});
+
+// Login form validation.
 loginForm.addEventListener("submit", function (event) {
     event.preventDefault();
     clearMessage();
@@ -86,12 +112,12 @@ loginForm.addEventListener("submit", function (event) {
     }
 
     showMessage(
-        "Login form validation successful. Real login requires a backend.",
+        "Login form validated successfully. Real authentication requires a backend.",
         "success"
     );
 });
 
-// Validate password confirmation as the user types.
+// Validate password confirmation while typing.
 function validatePasswordMatch() {
     if (confirmPassword.value === "") {
         confirmPassword.setCustomValidity("");
@@ -108,7 +134,7 @@ function validatePasswordMatch() {
 registerPassword.addEventListener("input", validatePasswordMatch);
 confirmPassword.addEventListener("input", validatePasswordMatch);
 
-// Prevent credentials from appearing in the URL during registration.
+// Registration form validation.
 registerForm.addEventListener("submit", function (event) {
     event.preventDefault();
     clearMessage();
@@ -121,29 +147,48 @@ registerForm.addEventListener("submit", function (event) {
     }
 
     showMessage(
-        "Registration form validation successful. Real account creation requires a backend.",
+        "Registration form validated successfully. Real account creation requires a backend.",
         "success"
     );
 });
 
-// Demonstration for Forgot Password.
+// Forgot password demonstration.
 document.getElementById("forgotPassword").addEventListener("click", function (event) {
     event.preventDefault();
+
     showMessage(
         "Password recovery will be implemented in a future step.",
         "info"
     );
 });
 
-// Reset forms when the modal closes.
+// Reset forms when modal closes.
 authModal.addEventListener("hidden.bs.modal", function () {
     loginForm.reset();
     registerForm.reset();
+
+    document.querySelectorAll("[data-toggle-password]").forEach(function (button) {
+        const input = document.getElementById(button.dataset.togglePassword);
+        const icon = button.querySelector("i");
+
+        if (input) {
+            input.type = "password";
+        }
+
+        if (icon) {
+            icon.classList.remove("bi-eye-slash");
+            icon.classList.add("bi-eye");
+        }
+
+        button.setAttribute("aria-label", "Show password");
+        button.setAttribute("aria-pressed", "false");
+    });
+
     confirmPassword.setCustomValidity("");
     showLogin();
 });
 
-// Responsive screen-size check.
+// Screen-size check.
 function checkScreenSize() {
     console.log(
         window.innerWidth < 768

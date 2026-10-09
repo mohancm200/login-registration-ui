@@ -1,7 +1,3 @@
-/* =====================================================
-   TASK 2 - STEP 2
-   FINAL RESPONSIVE POLISH
-===================================================== */
 
 * {
     box-sizing: border-box;
@@ -19,8 +15,6 @@ body {
     font-family: Arial, sans-serif;
 }
 
-/* TOP INFORMATION BARS */
-
 .desktop-info-bar,
 .mobile-info-bar {
     background: #e8eefc;
@@ -36,8 +30,6 @@ body {
     padding: 9px 0;
     font-size: 0.82rem;
 }
-
-/* NAVBAR */
 
 .custom-navbar {
     background: #111827;
@@ -70,8 +62,6 @@ body {
 .navbar-toggler:focus {
     box-shadow: none;
 }
-
-/* HERO */
 
 .hero-section {
     padding: 70px 0;
@@ -124,8 +114,6 @@ body {
     font-size: 0.9rem;
 }
 
-/* HERO CARD */
-
 .hero-card {
     background: #ffffff;
     border-radius: 24px;
@@ -177,8 +165,6 @@ body {
     font-size: 1.5rem;
 }
 
-/* STATS */
-
 .stats-section {
     padding: 35px 0;
     background: #ffffff;
@@ -213,8 +199,6 @@ body {
     margin: 0;
     color: #6c757d;
 }
-
-/* FEATURES */
 
 .features-section {
     padding: 100px 0;
@@ -284,8 +268,6 @@ body {
     line-height: 1.7;
 }
 
-/* AUTH SECTION */
-
 .auth-section {
     padding: 100px 0;
     background: #f5f7fb;
@@ -325,8 +307,6 @@ body {
     margin: 15px 0 25px;
 }
 
-/* MODAL */
-
 .auth-modal {
     border: none;
     border-radius: 20px;
@@ -363,7 +343,17 @@ body {
     border-top: 1px solid #edf0f4;
 }
 
-/* FOOTER */
+.password-toggle {
+    min-width: 48px;
+}
+
+.password-toggle:focus {
+    box-shadow: none;
+}
+
+#formMessage {
+    overflow-wrap: anywhere;
+}
 
 .footer {
     padding: 25px 0;
@@ -376,10 +366,7 @@ body {
     color: #6c757d;
 }
 
-/* TABLET */
-
 @media (max-width: 991px) {
-
     .custom-navbar {
         padding: 14px 0;
     }
@@ -407,10 +394,7 @@ body {
     }
 }
 
-/* MOBILE */
-
 @media (max-width: 576px) {
-
     .hero-section {
         padding: 45px 0;
     }
