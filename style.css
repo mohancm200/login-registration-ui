@@ -1,6 +1,4 @@
 
-/* TASK 2 - STEP 4: FORM ANIMATIONS AND USER EXPERIENCE */
-
 * {
     box-sizing: border-box;
 }
@@ -17,7 +15,6 @@ body {
     font-family: Arial, sans-serif;
 }
 
-/* Information bars */
 .desktop-info-bar,
 .mobile-info-bar {
     background: #e8eefc;
@@ -34,7 +31,6 @@ body {
     font-size: 0.82rem;
 }
 
-/* Navigation */
 .custom-navbar {
     background: #111827;
     padding: 16px 0;
@@ -64,10 +60,16 @@ body {
 }
 
 .navbar-toggler:focus {
-    box-shadow: none;
+    box-shadow: 0 0 0 3px rgba(110, 168, 254, 0.5);
 }
 
-/* Hero section */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+    outline: 3px solid #6ea8fe;
+    outline-offset: 3px;
+}
+
 .hero-section {
     padding: 70px 0;
     background: linear-gradient(135deg, #f5f7fb, #e8eefc);
@@ -92,8 +94,8 @@ body {
 }
 
 .hero-title span {
-    color: #0d6efd;
     display: block;
+    color: #0d6efd;
 }
 
 .hero-text {
@@ -119,13 +121,11 @@ body {
     font-size: 0.9rem;
 }
 
-/* Reusable animation */
 @keyframes fadeInUp {
     from {
         opacity: 0;
         transform: translateY(18px);
     }
-
     to {
         opacity: 1;
         transform: translateY(0);
@@ -147,7 +147,6 @@ body {
     animation-delay: 0.2s;
 }
 
-/* Hero card */
 .hero-card {
     background: #ffffff;
     border-radius: 24px;
@@ -207,7 +206,6 @@ body {
     font-size: 1.5rem;
 }
 
-/* Statistics */
 .stats-section {
     padding: 35px 0;
     background: #ffffff;
@@ -243,7 +241,6 @@ body {
     color: #6c757d;
 }
 
-/* Features */
 .features-section {
     padding: 100px 0;
     background: #ffffff;
@@ -312,7 +309,43 @@ body {
     line-height: 1.7;
 }
 
-/* Authentication section */
+/* Carousel */
+#carouselFeatures {
+    background: #f5f7fb;
+}
+
+.highlight-slide {
+    min-height: 280px;
+    padding: 55px 45px;
+    color: #ffffff;
+    background: linear-gradient(135deg, #0d6efd, #243b80);
+}
+
+.highlight-slide i {
+    display: inline-block;
+    margin-bottom: 18px;
+}
+
+.highlight-slide h3 {
+    font-weight: 800;
+    margin-bottom: 12px;
+}
+
+.highlight-slide p {
+    max-width: 550px;
+    margin: 0 auto;
+    line-height: 1.7;
+}
+
+#featureCarousel .carousel-indicators {
+    margin-bottom: 12px;
+}
+
+#featureCarousel .carousel-control-prev,
+#featureCarousel .carousel-control-next {
+    width: 10%;
+}
+
 .auth-section {
     padding: 100px 0;
     background: #f5f7fb;
@@ -352,7 +385,6 @@ body {
     margin: 15px 0 25px;
 }
 
-/* Modal animation */
 .auth-modal {
     border: none;
     border-radius: 20px;
@@ -386,7 +418,6 @@ body {
     0%, 100% {
         transform: scale(1);
     }
-
     50% {
         transform: scale(1.05);
     }
@@ -400,7 +431,6 @@ body {
     border-top: 1px solid #edf0f4;
 }
 
-/* Form fields */
 .form-control {
     padding: 10px 12px;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
@@ -415,24 +445,20 @@ body {
     min-width: 48px;
 }
 
-.password-toggle:focus {
-    box-shadow: none;
-}
-
-.btn {
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.btn:hover {
-    box-shadow: 0 5px 14px rgba(13, 110, 253, 0.12);
-}
-
 #formMessage {
     overflow-wrap: anywhere;
     animation: fadeInUp 0.25s ease both;
 }
 
-/* Footer */
+.button-loading .spinner-border {
+    vertical-align: -0.125em;
+}
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.8;
+}
+
 .footer {
     padding: 25px 0;
     background: #111827;
@@ -444,7 +470,6 @@ body {
     color: #6c757d;
 }
 
-/* Tablet */
 @media (max-width: 991px) {
     .custom-navbar {
         padding: 14px 0;
@@ -473,7 +498,6 @@ body {
     }
 }
 
-/* Mobile */
 @media (max-width: 576px) {
     .hero-section {
         padding: 45px 0;
@@ -525,12 +549,24 @@ body {
         padding: 30px 20px;
     }
 
+    .highlight-slide {
+        min-height: 260px;
+        padding: 45px 35px;
+    }
+
+    .highlight-slide h3 {
+        font-size: 1.35rem;
+    }
+
+    .highlight-slide p {
+        font-size: 0.95rem;
+    }
+
     .footer {
         font-size: 0.85rem;
     }
 }
 
-/* Respect reduced-motion preferences */
 @media (prefers-reduced-motion: reduce) {
     *,
     *::before,

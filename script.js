@@ -1,7 +1,7 @@
 
 "use strict";
 
-// Task 2 - Step 4, Commit 3: Loading Feedback
+// Task 2 - Step 5, Commit 1: Bootstrap Carousel and Components
 
 const navbarLinks = document.querySelectorAll(".navbar-nav .nav-link");
 const navbarCollapse = document.querySelector(".navbar-collapse");
@@ -15,6 +15,7 @@ navbarLinks.forEach(function (link) {
     });
 });
 
+// Authentication elements.
 const authModal = document.getElementById("authModal");
 const loginPanel = document.getElementById("loginPanel");
 const registerPanel = document.getElementById("registerPanel");
@@ -78,13 +79,12 @@ document.querySelectorAll("[data-toggle-password]").forEach(function (button) {
     });
 });
 
-// Bootstrap form validation.
+// Validate forms.
 function validateForm(form) {
     form.classList.add("was-validated");
     return form.checkValidity();
 }
 
-// Loading state for submit buttons.
 function setLoading(button, loading) {
     button.disabled = loading;
     button.querySelector(".button-label").classList.toggle("d-none", loading);
@@ -99,7 +99,6 @@ function finishLoading(button) {
 // Login form.
 loginForm.addEventListener("submit", function (event) {
     event.preventDefault();
-
     if (submissionInProgress) return;
 
     clearMessage();
@@ -110,11 +109,9 @@ loginForm.addEventListener("submit", function (event) {
     }
 
     submissionInProgress = true;
-
     const button = document.getElementById("loginSubmit");
     setLoading(button, true);
 
-    // Demo only: no server request is being made.
     window.setTimeout(function () {
         finishLoading(button);
         showMessage(
@@ -124,7 +121,7 @@ loginForm.addEventListener("submit", function (event) {
     }, 900);
 });
 
-// Confirm password validation.
+// Registration password matching.
 function validatePasswordMatch() {
     confirmPassword.setCustomValidity(
         confirmPassword.value !== registerPassword.value
@@ -139,7 +136,6 @@ confirmPassword.addEventListener("input", validatePasswordMatch);
 // Registration form.
 registerForm.addEventListener("submit", function (event) {
     event.preventDefault();
-
     if (submissionInProgress) return;
 
     clearMessage();
@@ -151,11 +147,9 @@ registerForm.addEventListener("submit", function (event) {
     }
 
     submissionInProgress = true;
-
     const button = document.getElementById("registerSubmit");
     setLoading(button, true);
 
-    // Demo only: no account is created or stored.
     window.setTimeout(function () {
         finishLoading(button);
         showMessage(
@@ -165,7 +159,7 @@ registerForm.addEventListener("submit", function (event) {
     }, 900);
 });
 
-// Clear feedback when the user edits a field.
+// Clear messages as the user edits fields.
 document.querySelectorAll("#loginForm input, #registerForm input").forEach(function (input) {
     input.addEventListener("input", clearMessage);
 });
@@ -176,11 +170,10 @@ document.getElementById("forgotPassword").addEventListener("click", function (ev
     showMessage("Password recovery will be implemented in a future step.", "info");
 });
 
-// Reset forms and password visibility when the modal closes.
+// Reset forms when the modal closes.
 authModal.addEventListener("hidden.bs.modal", function () {
     loginForm.reset();
     registerForm.reset();
-
     loginForm.classList.remove("was-validated");
     registerForm.classList.remove("was-validated");
     confirmPassword.setCustomValidity("");
@@ -199,7 +192,19 @@ authModal.addEventListener("hidden.bs.modal", function () {
     showLogin();
 });
 
-// Screen size information.
+// Carousel initialization. Bootstrap also handles the controls automatically.
+const carouselElement = document.getElementById("featureCarousel");
+
+if (carouselElement) {
+    new bootstrap.Carousel(carouselElement, {
+        interval: 5000,
+        ride: "carousel",
+        pause: "hover",
+        wrap: true
+    });
+}
+
+// Responsive screen-size information.
 function checkScreenSize() {
     console.log(
         window.innerWidth < 768

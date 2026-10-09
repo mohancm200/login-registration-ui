@@ -40,6 +40,7 @@
                 <ul class="navbar-nav ms-auto align-items-lg-center">
                     <li class="nav-item"><a class="nav-link active" href="#home">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#carouselFeatures">Highlights</a></li>
                     <li class="nav-item"><a class="nav-link" href="#auth">Authentication</a></li>
                     <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
                         <button class="btn btn-light px-4 w-100" type="button"
@@ -116,12 +117,109 @@
             </div>
 
             <div class="row g-4">
-                <div class="col-12 col-sm-6 col-lg-4"><div class="feature-card"><div class="feature-icon"><i class="bi bi-phone"></i></div><h4>Responsive Design</h4><p>Adapts to desktop, tablet and mobile screens.</p></div></div>
-                <div class="col-12 col-sm-6 col-lg-4"><div class="feature-card"><div class="feature-icon"><i class="bi bi-bootstrap"></i></div><h4>Bootstrap 5</h4><p>Bootstrap grid, components and responsive utilities.</p></div></div>
-                <div class="col-12 col-sm-6 col-lg-4"><div class="feature-card"><div class="feature-icon"><i class="bi bi-code-slash"></i></div><h4>JavaScript</h4><p>Client-side interaction and form validation.</p></div></div>
-                <div class="col-12 col-sm-6 col-lg-4"><div class="feature-card"><div class="feature-icon"><i class="bi bi-phone-flip"></i></div><h4>Mobile First</h4><p>A layout designed for smaller screens first.</p></div></div>
-                <div class="col-12 col-sm-6 col-lg-4"><div class="feature-card"><div class="feature-icon"><i class="bi bi-layout-text-window"></i></div><h4>Grid Layout</h4><p>Bootstrap rows and columns for different screen sizes.</p></div></div>
-                <div class="col-12 col-sm-6 col-lg-4"><div class="feature-card"><div class="feature-icon"><i class="bi bi-lightning"></i></div><h4>Interactive UI</h4><p>Interactive login and registration forms.</p></div></div>
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="bi bi-phone"></i></div>
+                        <h4>Responsive Design</h4>
+                        <p>Adapts to desktop, tablet and mobile screens.</p>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="bi bi-bootstrap"></i></div>
+                        <h4>Bootstrap 5</h4>
+                        <p>Bootstrap grid, components and responsive utilities.</p>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="bi bi-code-slash"></i></div>
+                        <h4>JavaScript</h4>
+                        <p>Client-side interaction and form validation.</p>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="bi bi-phone-flip"></i></div>
+                        <h4>Mobile First</h4>
+                        <p>A layout designed for smaller screens first.</p>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="bi bi-layout-text-window"></i></div>
+                        <h4>Grid Layout</h4>
+                        <p>Bootstrap rows and columns for different screen sizes.</p>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="bi bi-lightning"></i></div>
+                        <h4>Interactive UI</h4>
+                        <p>Interactive login and registration forms.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bootstrap Carousel -->
+    <section id="carouselFeatures" class="py-5">
+        <div class="container">
+            <div class="section-heading text-center mb-4">
+                <span>AUTHPORTAL HIGHLIGHTS</span>
+                <h2>Simple. Responsive. User-Friendly.</h2>
+                <p>Explore the main features of this interface.</p>
+            </div>
+
+            <div id="featureCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#featureCarousel"
+                            data-bs-slide-to="0" class="active"
+                            aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#featureCarousel"
+                            data-bs-slide-to="1" aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#featureCarousel"
+                            data-bs-slide-to="2" aria-label="Slide 3"></button>
+                </div>
+
+                <div class="carousel-inner rounded-4 overflow-hidden">
+                    <div class="carousel-item active">
+                        <div class="highlight-slide text-center">
+                            <i class="bi bi-phone display-3"></i>
+                            <h3>Responsive Design</h3>
+                            <p>Use AuthPortal on desktops, tablets and mobile devices.</p>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <div class="highlight-slide text-center">
+                            <i class="bi bi-shield-lock display-3"></i>
+                            <h3>Authentication Interface</h3>
+                            <p>Login and registration forms with frontend validation.</p>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <div class="highlight-slide text-center">
+                            <i class="bi bi-lightning-charge display-3"></i>
+                            <h3>Easy to Use</h3>
+                            <p>Clear navigation, readable forms and interactive feedback.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="carousel-control-prev" type="button"
+                        data-bs-target="#featureCarousel" data-bs-slide="prev"
+                        aria-label="Previous slide">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                </button>
+
+                <button class="carousel-control-next" type="button"
+                        data-bs-target="#featureCarousel" data-bs-slide="next"
+                        aria-label="Next slide">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                </button>
             </div>
         </div>
     </section>
@@ -182,7 +280,8 @@
                                 <label for="loginEmail" class="form-label">Email Address</label>
                                 <input type="email" class="form-control"
                                        id="loginEmail" name="email"
-                                       placeholder="Enter your email" autocomplete="email" required>
+                                       placeholder="Enter your email"
+                                       autocomplete="email" required>
                                 <div class="invalid-feedback">Enter a valid email address.</div>
                             </div>
 
@@ -199,7 +298,6 @@
                                         <i class="bi bi-eye"></i>
                                     </button>
                                 </div>
-                                <div class="invalid-feedback">Password is required.</div>
                             </div>
 
                             <div class="d-flex justify-content-between align-items-center mb-4">
@@ -233,7 +331,8 @@
                                 <label for="registerName" class="form-label">Full Name</label>
                                 <input type="text" class="form-control"
                                        id="registerName" name="name"
-                                       placeholder="Enter your full name" autocomplete="name" required>
+                                       placeholder="Enter your full name"
+                                       autocomplete="name" required>
                                 <div class="invalid-feedback">Please enter your full name.</div>
                             </div>
 
@@ -241,7 +340,8 @@
                                 <label for="registerEmail" class="form-label">Email Address</label>
                                 <input type="email" class="form-control"
                                        id="registerEmail" name="email"
-                                       placeholder="Enter your email" autocomplete="email" required>
+                                       placeholder="Enter your email"
+                                       autocomplete="email" required>
                                 <div class="invalid-feedback">Enter a valid email address.</div>
                             </div>
 
@@ -259,7 +359,6 @@
                                     </button>
                                 </div>
                                 <div class="form-text">Use at least 8 characters.</div>
-                                <div class="invalid-feedback">Password must contain at least 8 characters.</div>
                             </div>
 
                             <div class="mb-3">
@@ -275,7 +374,6 @@
                                         <i class="bi bi-eye"></i>
                                     </button>
                                 </div>
-                                <div class="invalid-feedback">Passwords must match.</div>
                             </div>
 
                             <div class="form-check mb-4">
@@ -284,7 +382,6 @@
                                 <label class="form-check-label" for="agreeTerms">
                                     I agree to the terms and conditions.
                                 </label>
-                                <div class="invalid-feedback">Please accept the terms.</div>
                             </div>
 
                             <button type="submit" class="btn btn-dark btn-lg w-100" id="registerSubmit">
@@ -302,7 +399,8 @@
                         </p>
                     </div>
 
-                    <div id="formMessage" class="alert mt-3 mb-0" role="status" aria-live="polite" hidden></div>
+                    <div id="formMessage" class="alert mt-3 mb-0"
+                         role="status" aria-live="polite" hidden></div>
                 </div>
 
                 <div class="modal-footer justify-content-center">
