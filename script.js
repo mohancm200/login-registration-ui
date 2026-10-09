@@ -16,7 +16,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function showMessage(message, type) {
         if (!formMessage) return;
-
         formMessage.textContent = message;
         formMessage.className = "alert alert-" + type + " mt-3 mb-0";
         formMessage.hidden = false;
@@ -24,7 +23,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function clearMessage() {
         if (!formMessage) return;
-
         formMessage.textContent = "";
         formMessage.hidden = true;
         formMessage.className = "alert mt-3 mb-0";
@@ -80,7 +78,6 @@ document.addEventListener("DOMContentLoaded", function () {
         const valid = input.checkValidity();
         input.classList.toggle("is-invalid", !valid);
         input.classList.toggle("is-valid", valid);
-
         return valid;
     }
 
@@ -93,10 +90,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         const matches = registerPassword.value === confirmPassword.value;
-
         confirmPassword.classList.toggle("is-valid", matches);
         confirmPassword.classList.toggle("is-invalid", !matches);
-
         return matches;
     }
 
@@ -104,13 +99,9 @@ document.addEventListener("DOMContentLoaded", function () {
         const button = document.getElementById(buttonId);
         if (!button) return;
 
-        const label = button.querySelector(".button-label");
-        const loadingLabel = button.querySelector(".button-loading");
-
         button.disabled = loading;
-
-        if (label) label.classList.toggle("d-none", loading);
-        if (loadingLabel) loadingLabel.classList.toggle("d-none", !loading);
+        button.querySelector(".button-label")?.classList.toggle("d-none", loading);
+        button.querySelector(".button-loading")?.classList.toggle("d-none", !loading);
     }
 
     function simulateSubmission(buttonId, message) {
@@ -137,30 +128,22 @@ document.addEventListener("DOMContentLoaded", function () {
 
         loginForm.addEventListener("submit", function (event) {
             event.preventDefault();
-
             if (submissionInProgress) return;
 
             clearMessage();
 
-            const email = document.getElementById("loginEmail");
-            const password = document.getElementById("loginPassword");
-
-            const emailValid = validateField(email);
-            const passwordValid = validateField(password);
+            const emailValid = validateField(document.getElementById("loginEmail"));
+            const passwordValid = validateField(document.getElementById("loginPassword"));
 
             if (!emailValid || !passwordValid) {
-                showMessage(
-                    "Please enter a valid email address and password.",
-                    "danger"
-                );
-
+                showMessage("Please enter a valid email address and password.", "danger");
                 loginForm.querySelector(":invalid")?.focus();
                 return;
             }
 
             simulateSubmission(
                 "loginSubmit",
-                "Demo complete: your login form passed validation. No real account authentication was performed."
+                "Demo complete: your login form passed validation. No real authentication was performed."
             );
         });
     }
@@ -186,40 +169,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
         registerForm.addEventListener("submit", function (event) {
             event.preventDefault();
-
             if (submissionInProgress) return;
 
             clearMessage();
 
-            const name = document.getElementById("registerName");
-            const email = document.getElementById("registerEmail");
-            const password = registerPassword;
-            const confirmation = confirmPassword;
-            const terms = document.getElementById("agreeTerms");
-
-            const nameValid = validateField(name);
-            const emailValid = validateField(email);
-            const passwordValid = validateField(password);
-            const termsValid = validateField(terms);
+            const nameValid = validateField(document.getElementById("registerName"));
+            const emailValid = validateField(document.getElementById("registerEmail"));
+            const passwordValid = validateField(registerPassword);
+            const termsValid = validateField(document.getElementById("agreeTerms"));
             const passwordsMatch = validatePasswordMatch();
 
             if (!nameValid || !emailValid || !passwordValid || !termsValid) {
-                showMessage(
-                    "Please complete all required fields correctly.",
-                    "danger"
-                );
-
+                showMessage("Please complete all required fields correctly.", "danger");
                 registerForm.querySelector(":invalid")?.focus();
                 return;
             }
 
             if (!passwordsMatch) {
-                showMessage(
-                    "Passwords do not match. Please enter the same password twice.",
-                    "danger"
-                );
-
-                confirmation?.focus();
+                showMessage("Passwords do not match. Please enter the same password twice.", "danger");
+                confirmPassword?.focus();
                 return;
             }
 
@@ -232,12 +200,78 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.getElementById("forgotPassword")?.addEventListener("click", function (event) {
         event.preventDefault();
-
-        showMessage(
-            "Password recovery is a demo feature and is not connected to an account system.",
-            "info"
-        );
+        showMessage("Password recovery is a demo feature and is not connected to an account system.", "info");
     });
 
     authModal?.addEventListener("hidden.bs.modal", clearMessage);
+
+    // AJAX demonstration section: create it without changing index.html.
+    const ajaxSection = document.createElement("section");
+    ajaxSection.id = "ajaxDemo";
+    ajaxSection.className = "container py-5";
+
+    ajaxSection.innerHTML = `
+        <div class="card border-0 shadow-sm rounded-4 p-4">
+            <div class="text-center">
+                <span class="text-primary fw-bold small">JAVASCRIPT FETCH API</span>
+                <h2 class="h3 fw-bold mt-2">AJAX Demo</h2>
+                <p class="text-secondary">
+                    Load sample data without refreshing the webpage.
+                </p>
+                <button type="button" id="loadAjaxData" class="btn btn-primary">
+                    <i class="bi bi-cloud-download me-2"></i>Load Demo Data
+                </button>
+            </div>
+            <div id="ajaxResult" class="mt-4" role="status" aria-live="polite" hidden></div>
+        </div>
+    `;
+
+    const footer = document.querySelector(".footer");
+    if (footer) {
+        footer.parentNode.insertBefore(ajaxSection, footer);
+    } else {
+        document.body.appendChild(ajaxSection);
+    }
+
+    const ajaxButton = document.getElementById("loadAjaxData");
+    const ajaxResult = document.getElementById("ajaxResult");
+
+    ajaxButton.addEventListener("click", async function () {
+        ajaxButton.disabled = true;
+        ajaxButton.innerHTML =
+            '<span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>Loading...';
+
+        ajaxResult.hidden = false;
+        ajaxResult.className = "alert alert-info mt-4";
+        ajaxResult.textContent = "Requesting sample data. Please wait...";
+
+        try {
+            const response = await fetch("https://jsonplaceholder.typicode.com/posts/1");
+
+            if (!response.ok) {
+                throw new Error("The server returned an error.");
+            }
+
+            const data = await response.json();
+
+            const heading = document.createElement("h5");
+            heading.className = "fw-bold";
+            heading.textContent = data.title;
+
+            const paragraph = document.createElement("p");
+            paragraph.className = "mb-0";
+            paragraph.textContent = data.body;
+
+            ajaxResult.replaceChildren(heading, paragraph);
+            ajaxResult.className = "alert alert-success mt-4";
+        } catch (error) {
+            ajaxResult.className = "alert alert-danger mt-4";
+            ajaxResult.textContent =
+                "Unable to load sample data. Check your internet connection and try again.";
+        } finally {
+            ajaxButton.disabled = false;
+            ajaxButton.innerHTML =
+                '<i class="bi bi-cloud-download me-2"></i>Load Demo Data';
+        }
+    });
 });
