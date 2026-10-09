@@ -12,6 +12,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const registerPassword = document.getElementById("registerPassword");
     const confirmPassword = document.getElementById("confirmPassword");
 
+    let submissionInProgress = false;
+
     function showMessage(message, type) {
         if (!formMessage) return;
 
@@ -62,9 +64,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const show = input.type === "password";
             input.type = show ? "text" : "password";
+
             button.innerHTML = show
                 ? '<i class="bi bi-eye-slash"></i>'
                 : '<i class="bi bi-eye"></i>';
+
             button.setAttribute("aria-label", show ? "Hide password" : "Show password");
             button.setAttribute("aria-pressed", String(show));
         });
@@ -76,6 +80,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const valid = input.checkValidity();
         input.classList.toggle("is-invalid", !valid);
         input.classList.toggle("is-valid", valid);
+
         return valid;
     }
 
@@ -88,9 +93,38 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         const matches = registerPassword.value === confirmPassword.value;
+
         confirmPassword.classList.toggle("is-valid", matches);
         confirmPassword.classList.toggle("is-invalid", !matches);
+
         return matches;
+    }
+
+    function setLoading(buttonId, loading) {
+        const button = document.getElementById(buttonId);
+        if (!button) return;
+
+        const label = button.querySelector(".button-label");
+        const loadingLabel = button.querySelector(".button-loading");
+
+        button.disabled = loading;
+
+        if (label) label.classList.toggle("d-none", loading);
+        if (loadingLabel) loadingLabel.classList.toggle("d-none", !loading);
+    }
+
+    function simulateSubmission(buttonId, message) {
+        if (submissionInProgress) return;
+
+        submissionInProgress = true;
+        setLoading(buttonId, true);
+        showMessage("Please wait while we process your form...", "info");
+
+        window.setTimeout(function () {
+            setLoading(buttonId, false);
+            showMessage(message, "success");
+            submissionInProgress = false;
+        }, 1000);
     }
 
     if (loginForm) {
@@ -103,20 +137,30 @@ document.addEventListener("DOMContentLoaded", function () {
 
         loginForm.addEventListener("submit", function (event) {
             event.preventDefault();
+
+            if (submissionInProgress) return;
+
             clearMessage();
 
             const email = document.getElementById("loginEmail");
             const password = document.getElementById("loginPassword");
 
-            if (!validateField(email) || !validateField(password)) {
-                showMessage("Please enter a valid email address and password.", "danger");
+            const emailValid = validateField(email);
+            const passwordValid = validateField(password);
+
+            if (!emailValid || !passwordValid) {
+                showMessage(
+                    "Please enter a valid email address and password.",
+                    "danger"
+                );
+
                 loginForm.querySelector(":invalid")?.focus();
                 return;
             }
 
-            showMessage(
-                "Login form validated successfully. This demo does not authenticate real accounts.",
-                "success"
+            simulateSubmission(
+                "loginSubmit",
+                "Demo complete: your login form passed validation. No real account authentication was performed."
             );
         });
     }
@@ -142,6 +186,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
         registerForm.addEventListener("submit", function (event) {
             event.preventDefault();
+
+            if (submissionInProgress) return;
+
             clearMessage();
 
             const name = document.getElementById("registerName");
@@ -157,27 +204,39 @@ document.addEventListener("DOMContentLoaded", function () {
             const passwordsMatch = validatePasswordMatch();
 
             if (!nameValid || !emailValid || !passwordValid || !termsValid) {
-                showMessage("Please complete all required fields correctly.", "danger");
+                showMessage(
+                    "Please complete all required fields correctly.",
+                    "danger"
+                );
+
                 registerForm.querySelector(":invalid")?.focus();
                 return;
             }
 
             if (!passwordsMatch) {
-                showMessage("Passwords do not match. Please enter the same password twice.", "danger");
+                showMessage(
+                    "Passwords do not match. Please enter the same password twice.",
+                    "danger"
+                );
+
                 confirmation?.focus();
                 return;
             }
 
-            showMessage(
-                "Registration form validated successfully. This is a demo; no account has been created.",
-                "success"
+            simulateSubmission(
+                "registerSubmit",
+                "Demo complete: your registration form passed validation. No account has been created."
             );
         });
     }
 
     document.getElementById("forgotPassword")?.addEventListener("click", function (event) {
         event.preventDefault();
-        showMessage("Password recovery is a demo feature and is not connected to an account system.", "info");
+
+        showMessage(
+            "Password recovery is a demo feature and is not connected to an account system.",
+            "info"
+        );
     });
 
     authModal?.addEventListener("hidden.bs.modal", clearMessage);
