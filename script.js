@@ -1,11 +1,11 @@
 
 "use strict";
 
-// Task 2 - Step 3: Login and Registration Forms
+// Task 2 - Step 3, Commit 3: Form Validation
 
-console.log("AuthPortal authentication interface loaded.");
+console.log("AuthPortal form validation loaded.");
 
-// Close the mobile navbar after a navigation link is clicked.
+// Close the mobile navbar after clicking a navigation link.
 const navbarLinks = document.querySelectorAll(".navbar-nav .nav-link");
 const navbarCollapse = document.querySelector(".navbar-collapse");
 
@@ -22,12 +22,18 @@ navbarLinks.forEach(function (link) {
     });
 });
 
-// Get authentication elements.
+// Authentication elements.
 const authModal = document.getElementById("authModal");
 const loginPanel = document.getElementById("loginPanel");
 const registerPanel = document.getElementById("registerPanel");
 const modalTitle = document.getElementById("authModalLabel");
 const formMessage = document.getElementById("formMessage");
+
+const loginForm = document.getElementById("loginForm");
+const registerForm = document.getElementById("registerForm");
+
+const registerPassword = document.getElementById("registerPassword");
+const confirmPassword = document.getElementById("confirmPassword");
 
 function clearMessage() {
     formMessage.textContent = "";
@@ -55,11 +61,10 @@ function showRegister() {
     clearMessage();
 }
 
-// Switch between the login and registration panels.
+// Switch between Login and Registration.
 document.getElementById("showRegister").addEventListener("click", showRegister);
 document.getElementById("showLogin").addEventListener("click", showLogin);
 
-// Open the correct panel when either Authentication card is selected.
 document.querySelectorAll("[data-auth-view]").forEach(function (button) {
     button.addEventListener("click", function () {
         if (button.dataset.authView === "register") {
@@ -70,53 +75,58 @@ document.querySelectorAll("[data-auth-view]").forEach(function (button) {
     });
 });
 
-// Reset the modal when closed.
-authModal.addEventListener("hidden.bs.modal", function () {
-    showLogin();
-    document.getElementById("loginForm").reset();
-    document.getElementById("registerForm").reset();
-});
-
-// Handle login without putting form values in the URL.
-document.getElementById("loginForm").addEventListener("submit", function (event) {
+// Prevent credentials from appearing in the URL.
+loginForm.addEventListener("submit", function (event) {
     event.preventDefault();
+    clearMessage();
 
-    if (!this.checkValidity()) {
-        this.reportValidity();
+    if (!loginForm.checkValidity()) {
+        loginForm.reportValidity();
         return;
     }
 
     showMessage(
-        "Login form validated successfully. Real authentication requires a backend.",
+        "Login form validation successful. Real login requires a backend.",
         "success"
     );
 });
 
-// Handle registration without putting form values in the URL.
-document.getElementById("registerForm").addEventListener("submit", function (event) {
-    event.preventDefault();
-
-    if (!this.checkValidity()) {
-        this.reportValidity();
+// Validate password confirmation as the user types.
+function validatePasswordMatch() {
+    if (confirmPassword.value === "") {
+        confirmPassword.setCustomValidity("");
         return;
     }
 
-    const password = document.getElementById("registerPassword").value;
-    const confirmPassword = document.getElementById("confirmPassword").value;
+    if (registerPassword.value !== confirmPassword.value) {
+        confirmPassword.setCustomValidity("Passwords do not match.");
+    } else {
+        confirmPassword.setCustomValidity("");
+    }
+}
 
-    if (password !== confirmPassword) {
-        showMessage("Passwords do not match. Please try again.", "danger");
-        document.getElementById("confirmPassword").focus();
+registerPassword.addEventListener("input", validatePasswordMatch);
+confirmPassword.addEventListener("input", validatePasswordMatch);
+
+// Prevent credentials from appearing in the URL during registration.
+registerForm.addEventListener("submit", function (event) {
+    event.preventDefault();
+    clearMessage();
+
+    validatePasswordMatch();
+
+    if (!registerForm.checkValidity()) {
+        registerForm.reportValidity();
         return;
     }
 
     showMessage(
-        "Registration form validated successfully. Account creation requires a backend.",
+        "Registration form validation successful. Real account creation requires a backend.",
         "success"
     );
 });
 
-// Forgot password demonstration.
+// Demonstration for Forgot Password.
 document.getElementById("forgotPassword").addEventListener("click", function (event) {
     event.preventDefault();
     showMessage(
@@ -125,7 +135,15 @@ document.getElementById("forgotPassword").addEventListener("click", function (ev
     );
 });
 
-// Screen-size check.
+// Reset forms when the modal closes.
+authModal.addEventListener("hidden.bs.modal", function () {
+    loginForm.reset();
+    registerForm.reset();
+    confirmPassword.setCustomValidity("");
+    showLogin();
+});
+
+// Responsive screen-size check.
 function checkScreenSize() {
     console.log(
         window.innerWidth < 768
